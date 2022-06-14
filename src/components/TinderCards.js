@@ -5,14 +5,6 @@ import database from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import SwipeButtons from "./SwipeButtons";
 
-// const onSwipe = (direction) => {
-//   alert("You swiped: " + direction);
-// };
-
-// const onCardLeftScreen = (myIdentifier) => {
-//   alert(myIdentifier + " left the screen");
-// };
-
 function TinderCards(props) {
   const [people, setPeople] = useState([]);
 
@@ -20,14 +12,10 @@ function TinderCards(props) {
     async function fetchPeopleFromFirebase() {
       const peopleCollection = collection(database, "people");
       const peopleSnapshot = await getDocs(peopleCollection);
-      // console.log({ people: peopleSnapshot.docs.map((doc) => doc.data()) });
+      console.log({ people: peopleSnapshot.docs.map((doc) => doc.data()) });
       setPeople(peopleSnapshot.docs.map((doc) => doc.data()));
     }
     fetchPeopleFromFirebase();
-
-    // return () => {
-    //   fetchPeopleFromFirebase();
-    // };
   }, []);
 
   return (
@@ -36,8 +24,6 @@ function TinderCards(props) {
         {people.map((person) => (
           <TinderCard
             className="swipe"
-            // onSwipe={onSwipe}
-            // onCardLeftScreen={() => onCardLeftScreen("fooBar")}
             key={person.name}
             preventSwipe={["up", "down"]}
           >
@@ -70,11 +56,3 @@ function TinderCards(props) {
 }
 
 export default TinderCards;
-
-/* <TinderCard
-        onSwipe={onSwipe}
-        onCardLeftScreen={() => onCardLeftScreen("fooBar")}
-        preventSwipe={["up", "down"]}
-      >
-        <img src="components/image/Screenshot_20211021-224339.png" />
-      </TinderCard> */
